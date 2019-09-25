@@ -1,0 +1,37 @@
+What's the plan?
+
+1. Setup the project
+2. Setup a database on mlab
+3. Create an API that allows you to pay with Stripe
+4. Create a React component that can be used to pay with Stripe
+
+NOTE: All calls must be made over HTTPS otherwise stripe will fail
+
+1. To setup stripe payments we first import it with:
+
+npm i -S stripe
+const stripe = require('stripe')('your-private-key')
+
+2. Then setup the session object so that you're able to use req.session globally
+and access customer and user data by installing 'express-session' and 'connect-mongo'
+then doing:
+
+app.use(session({
+  secret: 'example-random-secret',
+  store: new MongoStore({
+    url: MONGO_URL,
+  }),
+  cookie: {
+    maxAge: 30 * 24 * 60 * 60 * 1000, // One whole month
+  },
+  resave: true,
+  unset: 'destroy',
+  saveUninitialized: true,
+}))
+
+3. Payments have to be indempotent which means they can only be charged once regardless
+of how many times they press the purchase button. They are generated on the client side and we use UUID to generate random strings based on the customer purchase action that stops repeated actions.
+
+4. Then we'll probably have to create a customer if it doesn't exist on the database
+and complete a payment with a custom quantity and text while storing the entire
+resulting invoice in the invoice database.
