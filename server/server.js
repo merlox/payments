@@ -65,13 +65,17 @@ app.use(express.static('dist'))
 
 async function start () {
   if (!MONGO_URL) {
-    return console.error('\nThe MONGO_URL .env variable must be set\n')
+    console.error('\nThe MONGO_URL .env variable must be set\n')
+    process.exit(0)
   } else if (!NODE_ENV) {
-    return console.error('\nThe NODE_ENV .env variable must be set\n')
+    console.error('\nThe NODE_ENV .env variable must be set\n')
+    process.exit(0)
   } else if (!STRIPE_PRIVATE_LIVE) {
-    return console.error('\nThe STRIPE_PRIVATE_LIVE .env variable must be set\n')
+    console.error('\nThe STRIPE_PRIVATE_LIVE .env variable must be set\n')
+    process.exit(0)
   } else if (!STRIPE_PRIVATE_TEST) {
-    return console.error('\nThe STRIPE_PRIVATE_TEST .env variable must be set\n')
+    console.error('\nThe STRIPE_PRIVATE_TEST .env variable must be set\n')
+    process.exit(0)
   }
 
   if (NODE_ENV == 'production') {

@@ -33,6 +33,9 @@ module.exports = {
                 }
             }, 'stylus-loader'],
             include: /src/
+        }, {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
         }]
     },
     plugins: [
